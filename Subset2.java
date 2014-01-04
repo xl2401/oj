@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Subset {
-    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+public class Subset2 {
+    private ArrayList<ArrayList<Integer>> lastLayer = new ArrayList<ArrayList<Integer>>();
+
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] S) {
         Arrays.sort(S);
         return subsets(S, S.length-1);
     }
@@ -15,15 +17,20 @@ public class Subset {
             return result;
         }
         else{
-            ArrayList<ArrayList<Integer>> lastLayer = subsets(S, idx-1);
+            ArrayList<ArrayList<Integer>> lastResult = subsets(S, idx-1);
             ArrayList<ArrayList<Integer>> curLayer = new ArrayList<ArrayList<Integer>>();
-            for (ArrayList<Integer> set: lastLayer){
+            ArrayList<ArrayList<Integer>> prev = lastResult;
+            if (idx != 0 && S[idx] == S[idx-1]){
+                prev = this.lastLayer;
+            }
+            for (ArrayList<Integer> set: prev){
                 ArrayList<Integer> newSet = copyList(set);
                 newSet.add(S[idx]);
                 curLayer.add(newSet);
             }
-            lastLayer.addAll(curLayer);
-            return lastLayer;
+            this.lastLayer = curLayer;
+            lastResult.addAll(curLayer);
+            return lastResult;
         }
     }
 
@@ -36,8 +43,8 @@ public class Subset {
     }
 
     public static void main(String[] args){
-        int[] A = {4,1,0};
-        ArrayList<ArrayList<Integer>> result = new Subset().subsets(A);
+        int[] A = {1,1,2,2,2};
+        ArrayList<ArrayList<Integer>> result = new Subset2().subsetsWithDup(A);
         for (ArrayList<Integer> set: result){
             for (Integer i: set){
                 System.out.print(i + " ");
