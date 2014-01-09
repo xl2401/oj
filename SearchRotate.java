@@ -36,6 +36,10 @@ public class SearchRotate {
         while (start <= end){
             int mid = (start + end) / 2;
             if (mid != A.length-1 && A[mid] > A[mid+1]) return mid;
+            // 'equal' is essential, consider 8, 9, 2, 3, 4
+            // start -> 8
+            // mid -> 8
+            // end -> 9
             if (A[start] <= A[mid]) start = mid + 1;
             else end  = mid - 1;
         }
@@ -43,7 +47,7 @@ public class SearchRotate {
     }
 
     public static void main(String[] args){
-        int[] A = {1};
-        System.out.println(new SearchRotate().search(A, 0));
+        int[] A = {5,1,2,3,4};
+        System.out.println(new SearchRotate().search(A, 3));
     }
 }
