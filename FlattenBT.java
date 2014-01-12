@@ -24,6 +24,7 @@ public class FlattenBT {
     public void flatternRecur(TreeNode root){
         if (root == null) return;
         prev.right = root;
+        prev.left = null;
         prev = root;
         TreeNode rootRight = root.right;
         flatternRecur(root.left);
@@ -44,6 +45,7 @@ public class FlattenBT {
         while (!stack.isEmpty()){
             TreeNode cur = stack.pop();
             prev.right = cur;
+            prev.left = null;
             prev = cur;
 
             if (cur.right != null)
