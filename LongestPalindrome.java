@@ -13,6 +13,13 @@
  * consider str of idx i, j(i < j && j-i>1). if str[i] == str[j] than we need str.substring(i+1, j) to be palindrome
  * so the len of subproblem is originallen-2, so we can solve shorter string first, from 1-> N
  * the matrix isPal record if str from i to j is palindrome, if yes, the item will be 1
+ *
+ * !!! Another solution:
+ * The DP solution solve this problem in O(N^2), and use O(N^2) space
+ * the following method use O(N^2) time and C space:
+ * we pick a point or the space between 2 num to be the center of the palindrome, so there are N+N-1 = 2N-1 centers,
+ * try to expand from the center and reach the max palindrome, expansion takes O(N), so in total O(N^2)
+ * No extra space needed.
  */
 public class LongestPalindrome {
     public String longestPalindrome(String s) {
