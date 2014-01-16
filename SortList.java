@@ -20,6 +20,13 @@ public class SortList {
         return dummy.next;
     }
 
+    /*
+     * Partition list from l.next -> h
+     * l.next is the pivot
+     * iterate over l.next.next to h
+     * every node on the left of lt is smaller than pivot
+     * every node on the right of gt is greater than pivot
+     */
     public void partition(ListNode l, ListNode h){
         if (l == h || l.next == h)
             return;
