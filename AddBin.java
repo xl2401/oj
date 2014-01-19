@@ -9,57 +9,32 @@
  * Return "100".
  *
  * Solution:
- * Soooo easy...
+ * Reverse string at first make code much cleaner
  */
 public class AddBin {
     public String addBinary(String a, String b) {
-        // pad zero
-        int M = a.length();
-        int N = b.length();
-        if (M < N){
-            int diff = N-M;
-            for (int i = 0; i < diff; i++){
-                a = '0' + a;
-            }
-        }
-        else{
-            int diff = M-N;
-            for (int i = 0; i < diff; i++){
-                b = '0' + b;
-            }
-        }
-        N = Math.max(M, N);
+        a = new StringBuilder(a).reverse().toString();
+        b = new StringBuilder(b).reverse().toString();
         StringBuilder sb = new StringBuilder();
-        boolean carry = false;
-        for (int i = N-1; i >= 0; i--){
-            int ac = a.charAt(i) - '0';
-            int bc = b.charAt(i) - '0';
-            int sum = ac + bc;
-            if (carry)
-                sum++;
-            if (sum == 0){
-                carry = false;
-            }
-            else if (sum == 1){
-                carry = false;
-            }
-            else if (sum == 2){
-                carry = true;
-                sum = 0;
-            }
-            else{
-                carry = true;
-                sum = 1;
-            }
-            sb.append(sum);
+        int carry = 0;
+        for (int i = 0; i < Math.max(a.length(), b.length()); i++){
+            int aDigit = 0;
+            int bDigit = 0;
+            if (i < a.length())
+                aDigit = a.charAt(i) - '0';
+            if (i < b.length())
+                bDigit = b.charAt(i) - '0';
+            int sum = aDigit + bDigit + carry;
+            sb.append(sum % 2);
+            carry = sum / 2;
         }
-        if (carry)
+        if (carry == 1)
             sb.append(1);
         return sb.reverse().toString();
     }
 
     public static void main(String[] args){
         AddBin ab = new AddBin();
-        System.out.println(ab.addBinary("0", "0"));
+        System.out.println(ab.addBinary("11", "1"));
     }
 }
