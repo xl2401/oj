@@ -46,6 +46,7 @@ public class MaxRecInHist {
 
     public int largestRectangleArea(int[] height) {
         int N = height.length;
+        // add a zero value at the end of height, which will help trigger the final calculation
         height = Arrays.copyOf(height, N + 1);
         LinkedList<Integer> stack = new LinkedList<Integer>();
         int max = 0;
