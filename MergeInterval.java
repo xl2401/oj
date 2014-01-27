@@ -25,6 +25,8 @@ public class MergeInterval {
             }
         });
         int i = 0;
+        // what to revise the arraylist during iteration?
+        // use old school loop and take care of the index.
         while (true){
             // end of list
             if (i == intervals.size()){
