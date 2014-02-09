@@ -1,35 +1,45 @@
+/*
+ * Title: Add Two Numbers
+ * Description:
+ * You are given two linked lists representing two non-negative numbers. 
+ * The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+ *
+ * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+ * Output: 7 -> 0 -> 8
+ *
+ * Solution:
+ * add node by node, easy
+ */
 public class AddTwoNum {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2){
         ListNode dummy = new ListNode(0);
         ListNode prev = dummy;
-        boolean carry = false;
-        ListNode ptr1 = l1;
-        ListNode ptr2 = l2;
-        while (ptr1 != null || ptr2 != null || carry){
+        int carry = 0;
+        while (l1 != null || l2 != null){
             int sum = 0;
-            if (ptr1 != null){
-                sum += ptr1.val;
+            if (l1 != null){
+                sum += l1.val;
+                l1 = l1.next;
             }
-            if (ptr2 != null){
-                sum += ptr2.val;
+            if (l2 != null){
+                sum += l2.val;
+                l2 = l2.next;
             }
-            if (carry) sum++;
+            sum += carry;
             if (sum >= 10){
-                carry = true;
                 sum -= 10;
+                carry = 1;
             }
             else{
-                carry = false;
+                carry = 0;
             }
-            ListNode current = new ListNode(sum);
-            prev.next = current;
-            prev = current;
-            if (ptr1 != null){
-                ptr1 = ptr1.next;
-            }
-            if (ptr2 != null){
-                ptr2 = ptr2.next;
-            }
+            ListNode newNode = new ListNode(sum);
+            prev.next = newNode;
+            prev = newNode;
+        }
+        if (carry == 1){
+            ListNode newNode = new ListNode(1);
+            prev.next = newNode;
         }
         return dummy.next;
     }
