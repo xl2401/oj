@@ -1,43 +1,31 @@
+/*
+ * Title: Swap Nodes in Pairs 
+ * Description:
+ * Given a linked list, swap every two adjacent nodes and return its head.
+ *
+ * For example,
+ * Given 1->2->3->4, you should return the list as 2->1->4->3.
+ *
+ * Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+ *
+ * Solution:
+ * When doing list operation(little complicate), first record or the relating node, and then do the operation(this is much easier to do it on the fly)
+ */
 public class SwapNodes {
     public ListNode swapPairs(ListNode head) {
-        if (head == null) return null;
-        if (head.next == null) return head;
-        ListNode i = head;
-        ListNode j = head.next;
-        head = j;
-        while (j != null && i != null){
-            ListNode nexti = j.next;
-            j.next = i;
-            if (nexti == null){
-                i.next = null;
-                break;
-            }
-            else{
-                ListNode nextj = nexti.next;
-                if (nextj == null){
-                    i.next = nexti;
-                    break;
-                }
-                else{
-                    i.next = nextj;
-                    i = nexti;
-                    j = nextj;
-                }
-            }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode ptr = dummy;
+        // ptr is the node before the 2 swapping node
+        while (ptr.next != null && ptr.next.next != null){
+            ListNode n = ptr.next;
+            ListNode nn = ptr.next.next;
+            ListNode nnn = ptr.next.next.next;
+            ptr.next = nn;
+            nn.next = n;
+            n.next = nnn;
+            ptr = n;
         }
-        return head;
-    }
-
-    public static void main(String[] args){
-        ListNode a = new ListNode(1);
-        ListNode b = new ListNode(2);
-        ListNode c = new ListNode(3);
-        a.next = b;
-        b.next = c;
-        ListNode head = new SwapNodes().swapPairs(a);
-        while (head != null){
-            System.out.println(head.val);
-            head = head.next;
-        }
+        return dummy.next;
     }
 }
