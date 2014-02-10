@@ -1,5 +1,6 @@
 /*
- * Title: String to Integer (atoi) 
+ * Title:
+ * String to Integer (atoi) 
  * Description:
  * Implement atoi to convert a string to an integer.
  *
@@ -7,55 +8,59 @@
  *
  * Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
  *
+ * spoilers alert... click to show requirements for atoi.
+ *
+ * Requirements for atoi:
+ * The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+ *
+ * The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+ *
+ * If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+ *
+ * If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
+ *
  * Solution:
- * the overflow judge can be tricky...
+ * The overflow check is tricky
+ * pay attention: -65536 does not overflow, but 65536 actually overflows, here overflow info is not correct but the final result is right,
+ * if require other kind of return, this condition require special attention
  */
-public class Atoi {
-    public int atoi(String str) {
-        int result = 0;
-        boolean sign = true;
-        boolean overflow = false;
-        int N = str.length();
-        if (N == 0) return 0;
-        int i = 0;
-        while (Character.isWhitespace(str.charAt(i)))
-            i++;
-        // check sign
-        if (str.charAt(i) == '+')
-            i++;
-        if (str.charAt(i) == '-'){
-            i++;
-            sign = false;
-        }
-        for (;i < N; i++){
-            if (!Character.isDigit(str.charAt(i)))
-                break;
-            // judge if *10 will overflow
-            if (result != 0 && Integer.MAX_VALUE / 10 < result){
-                overflow = true;
-                break;
-            }
-            result *= 10;
-            result += str.charAt(i) - '0';
-            // judge if + will overflow
-            if (result < 0){
-                overflow = true;
-                break;
-            }
-        }
-        if (overflow){
-            if (sign)
-                return Integer.MAX_VALUE;
-            else
-                return Integer.MIN_VALUE;
-        }
-        if (!sign)
-            result *= -1;
-        return result;
-    }
-
-    public static void main(String[] args){
-        Atoi a = new Atoi();
-        System.out.println(a.atoi("2147483648"));
+public class Atoi{
+    public int atoi(String s){
+         int ptr = 0;
+         int N = s.length();
+         while (ptr < N && s.charAt(ptr) == ' '){
+             ptr++;
+         }
+         if (ptr == N) return 0;// empty string
+         // deal with + and -
+         int sign = 1;
+         if (s.charAt(ptr) == '+' || s.charAt(ptr) == '-'){
+             if (s.charAt(ptr) == '-') sign = -1;
+             ptr++;
+         }
+         boolean overflow = false;
+         int res = 0;
+         // read digit
+         while (ptr < N && s.charAt(ptr) >= '0' && s.charAt(ptr) <= '9'){
+             if (res > Integer.MAX_VALUE / 10){
+                 overflow = true;
+                 break;
+             }
+             res = res * 10 + s.charAt(ptr) - '0';
+             if (res < 0){
+                 overflow = true;
+                 break;
+             }
+             ptr++;
+         }
+         if (overflow){
+             if (sign == 1){
+                 return Integer.MAX_VALUE;
+             }
+             else{
+                 return Integer.MIN_VALUE;
+             }
+         }
+         return sign * res;
     }
 }
