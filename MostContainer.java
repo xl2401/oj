@@ -10,6 +10,7 @@
  *
  * Solution:
  * need proof
+ * see: http://oj.leetcode.com/discuss/oj/container-with-most-water
  */
 public class MostContainer {
     public int maxArea(int[] height) {
