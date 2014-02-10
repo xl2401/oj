@@ -10,32 +10,39 @@
  */
 public class Reg {
     public boolean isMatch(String s, String p) {
-        return isMatch(s, p, 0, 0);
+        return isMatchHelper(s, p, 0, 0);
     }
-
-    public boolean isMatch(String s, String p, int sIdx, int pIdx){
-        // end of either string
-        if (pIdx == p.length())
+    
+    public boolean isMatchHelper(String s, String p, int sIdx, int pIdx){
+        // note only if we use up p we can make decision, 
+        // when use up s, p may remain *
+        if (pIdx == p.length()){
             return sIdx == s.length();
-
-        // last char or next char is not *
-        if (pIdx == p.length()-1 || p.charAt(pIdx+1) != '*'){
-            if (sIdx != s.length())
-                return (p.charAt(pIdx) == '.' || p.charAt(pIdx) == s.charAt(sIdx))
-                                          && isMatch(s, p, sIdx+1, pIdx+1);
-            else
+        }
+        int pLen = p.length();
+        int sLen = s.length();
+        // check if next char is *
+        if (pIdx < pLen - 1 && p.charAt(pIdx+1) == '*'){
+            // check match 0, 1, 2...
+            while (sIdx < sLen && (s.charAt(sIdx) == p.charAt(pIdx) || p.charAt(pIdx) == '.')){
+                if (isMatchHelper(s, p, sIdx, pIdx + 2)){
+                    return true;
+                }
+                // match one more c
+                sIdx++;
+            }
+            // * does not match any more, move on
+            return isMatchHelper(s, p, sIdx, pIdx + 2);
+        }
+        else{
+            if (sIdx != sLen){
+                return (s.charAt(sIdx) == p.charAt(pIdx) || p.charAt(pIdx) == '.') 
+                                                         && isMatchHelper(s, p, sIdx+1, pIdx+1);
+            }
+            else{
+                // use up s, but p is not *
                 return false;
+            }
         }
-        // next char is *
-        while (sIdx < s.length() && (p.charAt(pIdx) == s.charAt(sIdx) || p.charAt(pIdx) == '.')){
-            if (isMatch(s, p, sIdx, pIdx+2))
-                return true;
-            sIdx++;
-        }
-        return isMatch(s, p, sIdx, pIdx+2);
-    }
-
-    public static void main(String[] args){
-        System.out.println(new Reg().isMatch("a", "ab*"));
     }
 }
