@@ -20,6 +20,7 @@
  * we pick a point or the space between 2 num to be the center of the palindrome, so there are N+N-1 = 2N-1 centers,
  * try to expand from the center and reach the max palindrome, expansion takes O(N), so in total O(N^2)
  * No extra space needed.
+ * See LongestPalindrome2.java for code
  *
  * There exists O(N) solutions:
  * see http://www.felix021.com/blog/read.php?2040
