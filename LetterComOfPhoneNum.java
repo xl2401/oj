@@ -1,9 +1,22 @@
-import java.util.HashMap;
 import java.util.ArrayList;
 
+/*
+ * Title: Letter Combinations of a Phone Number
+ * Description:
+ * Given a digit string, return all possible letter combinations that the number could represent.
+ *
+ * A mapping of digit to letters (just like on the telephone buttons) is given below.
+ *
+ * Solution:
+ * recursive.
+ */
 public class LetterComOfPhoneNum {
-    public String getMapString(int digit){
-        switch (digit){
+    public ArrayList<String> letterCombinations(String digits) {
+        return letterCombinations(digits, digits.length());        
+    }
+    
+    private String getAlphaStr(int i){
+        switch (i){
             case 2:
                 return "abc";
             case 3:
@@ -24,36 +37,23 @@ public class LetterComOfPhoneNum {
                 return "";
         }
     }
-    public ArrayList<String> letterCombinations(String digits) {
-        if (digits.length() == 0){
-            ArrayList<String> result = new ArrayList<String>();
-            result.add("");
-            return result;
-        } 
-        if (digits.length() == 1){
-            ArrayList<String> resultList = new ArrayList<String>();
-            int digit = Integer.parseInt("" + digits.charAt(0));
-            String mapString = getMapString(digit);
-            for (int i = 0; i < mapString.length(); i++){
-                resultList.add("" + mapString.charAt(i));
-            }
-            return resultList;
+    
+    // the combination before idx
+    public ArrayList<String> letterCombinations(String digits, int idx){
+        if (idx == 0){
+            ArrayList<String> res = new ArrayList<String>();
+            res.add("");
+            return res;
         }
-        else{
-            int N = digits.length();
-            ArrayList<String> previousCombination = letterCombinations(digits.substring(0, N-1));
-            // add last digit
-            int lastDigit = Integer.parseInt("" + digits.charAt(N-1));
-            String mapString = getMapString(lastDigit);
-            ArrayList<String> result = new ArrayList<String>();
-            for (String digitString: previousCombination){
-                for (int i = 0; i < mapString.length(); i++){
-                    char appendix = mapString.charAt(i);
-                    result.add(digitString + appendix);
-                }
+        ArrayList<String> prevComb = letterCombinations(digits, idx - 1);
+        String alphaStr = getAlphaStr(digits.charAt(idx - 1) - '0');
+        ArrayList<String> res = new ArrayList<String>();
+        for (int i = 0; i < alphaStr.length(); i++){
+            char c = alphaStr.charAt(i);
+            for (int j = 0; j < prevComb.size(); j++){
+                res.add(prevComb.get(j) + c);
             }
-            return result;
         }
-        
+        return res;
     }
 }
