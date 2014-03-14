@@ -4,35 +4,20 @@ import java.util.Arrays;
 public class Subset {
     public ArrayList<ArrayList<Integer>> subsets(int[] S) {
         Arrays.sort(S);
-        return subsets(S, S.length-1);
-    }
-
-    public ArrayList<ArrayList<Integer>> subsets(int[] S, int idx){
-        if (idx == -1){
-            ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-            ArrayList<Integer> emptySet = new ArrayList<Integer>();
-            result.add(emptySet);
-            return result;
-        }
-        else{
-            ArrayList<ArrayList<Integer>> lastLayer = subsets(S, idx-1);
-            ArrayList<ArrayList<Integer>> curLayer = new ArrayList<ArrayList<Integer>>();
-            for (ArrayList<Integer> set: lastLayer){
-                ArrayList<Integer> newSet = copyList(set);
-                newSet.add(S[idx]);
-                curLayer.add(newSet);
+        int N = S.length;
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> emptySet = new ArrayList<Integer>();
+        res.add(emptySet);
+        for (int i = 0; i < N; i++){
+            int size = res.size();
+            // iterate over previous result
+            for (int j = 0; j < size; j++){
+                ArrayList<Integer> curSet = new ArrayList<Integer>(res.get(j));
+                curSet.add(S[i]);
+                res.add(curSet);
             }
-            lastLayer.addAll(curLayer);
-            return lastLayer;
         }
-    }
-
-    public ArrayList<Integer> copyList(ArrayList<Integer> l){
-        ArrayList<Integer> newL = new ArrayList<Integer>();
-        for (Integer i: l){
-            newL.add(i);
-        }
-        return newL;
+        return res;
     }
 
     public static void main(String[] args){
