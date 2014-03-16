@@ -1,49 +1,33 @@
-import java.util.ArrayList;
-
-public class PartitionList {
+public class PartitionList{
     public ListNode partition(ListNode head, int x) {
-        if (head == null) return null;
-        else{
-            ListNode dummy = new ListNode(0);
-            dummy.next = head;
-            ListNode i = dummy;
-            ListNode j = head;
-            // find end of list;
-            ListNode last = dummy;
-            while (last.next != null){
-                last = last.next;
+        // prepresnet the smaller list
+        ListNode sDummy = new ListNode(0);
+        // the original list, go over it, remove the smaller one
+        // and insert to smaller list. at last, it will only
+        // contains equal or larger element
+        ListNode lDummy = new ListNode(0);
+        lDummy.next = head;
+        // maintain for deletion
+        ListNode prev = lDummy;
+        // the last element of smaller list
+        ListNode sLast = sDummy;
+        
+        while (prev != null && prev.next != null){
+            ListNode cur = prev.next;
+            if (cur.val < x){
+                // delete
+                prev.next = cur.next;
+                // move to smaller list
+                sLast.next = cur;
+                sLast = cur;
+                sLast.next = null;
             }
-            ListNode endFlag = null;
-
-            // put node ge x to the end of the list
-            while (j != endFlag){
-                if (j.next == null) {
-                    last = j;
-                    break;
-                }
-                if (j.val >= x){
-                    // end flag is the first element after original end
-                    if (endFlag == null) endFlag = j;
-                    i.next = j.next;
-                    last.next = j;
-                    last = j;
-                    j = i.next;
-                }
-                else{
-                    i = i.next;
-                    j = j.next;
-                }
+            else{
+                prev = cur;
             }
-            last.next = null;
-            return dummy.next;
         }
-    }
-
-    public static void main(String[] args){
-        ListNode a = new ListNode(2);
-        //ListNode b = new ListNode(1);
-        //a.next = b;
-        ListNode head = new PartitionList().partition(a, 1);
-        System.out.println(head.val);
+        // combine
+        sLast.next = lDummy.next;
+        return sDummy.next;
     }
 }
