@@ -26,7 +26,7 @@ import java.util.Arrays;
  * Solution:
  * this solution uses space O(n^2) to record the board, there's O(n) implementation, see NQueens.java
  */
-public class NqueensBoard {
+public class NQueensBoard {
     public ArrayList<String[]> solveNQueens(int n) {
         char[][] board = new char[n][n];
         for (int i = 0; i < n; i++){
@@ -77,5 +77,11 @@ public class NqueensBoard {
                 board[row][col] = '.';
             }
         }
+    }
+
+    public static void main(String[] args){
+        NQueensBoard nq = new NQueensBoard();
+        ArrayList<String[]> res = nq.solveNQueens(9);
+        System.out.println(res.size());
     }
 }
