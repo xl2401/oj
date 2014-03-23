@@ -2,17 +2,9 @@ import java.util.ArrayList;
 
 /*
  * Title: Recover Binary Search Tree
- * Description:
- * Two elements of a binary search tree (BST) are swapped by mistake.
- *
- * Recover the tree without changing its structure.
- *
- * Note:
- * A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
- *
  * Solution:
- * This is O(n) solution...
- * Just use inorder traversal and final which two nodes are not in order and swap them
+ * This use inorder traversal and takes O(n) space
+ * refer to RecoverBSTImprove.java for O(1) solution
  */
 public class RecoverBST {
     private ArrayList<TreeNode> orderList = null;
@@ -24,13 +16,9 @@ public class RecoverBST {
         TreeNode n2 = null;
         for (int i = 0; i < orderList.size(); i++){
             TreeNode cur = orderList.get(i);
-            if (i == 0 && cur.val > orderList.get(i+1).val){
-                n1 = cur;
-                continue;
-            }
-            TreeNode prev = orderList.get(i-1);
-            if (prev.val > cur.val){
-                if (cur == n1) n1 = cur;
+            if ((i > 0 && cur.val < orderList.get(i-1).val) 
+            || (i < orderList.size()-1 && cur.val > orderList.get(i+1).val)){
+                if (n1 == null) n1 = cur;
                 else n2 = cur;
             }
         }
@@ -43,6 +31,7 @@ public class RecoverBST {
         n1.val = n2.val;
         n2.val = tmp;
     }
+    
     private void inorder(TreeNode root){
         if (root == null) return;
         inorder(root.left);
