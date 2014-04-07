@@ -19,6 +19,7 @@
  * maintain the cnt: the length of chars in the current window that is in T
  * once cnt reached M, advance start before it breaks the requirement
  * update min val
+ * http://leetcode.com/2010/11/finding-minimum-window-in-s-which.html
  */
 public class MinWin {
     public String minWindow(String S, String T) {
