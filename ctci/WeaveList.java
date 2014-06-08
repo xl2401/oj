@@ -33,7 +33,7 @@ public class WeaveList {
 
     public static void main(String[] args) {
         int[] vals = {1, 2, 3, 4, 5, 6};
-        ListNode head = ListNode.constuctList(vals);
+        ListNode head = ListNode.constructList(vals);
         new WeaveList().weave(head);
         ListNode.printList(head);
     }

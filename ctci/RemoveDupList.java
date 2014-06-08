@@ -43,7 +43,7 @@ public class RemoveDupList {
 
     public static void main(String[] args) {
         int[] vals = {3,3,1,4,2,1,3,2};
-        ListNode head = ListNode.constuctList(vals);
+        ListNode head = ListNode.constructList(vals);
         // new RemoveDupList().rmDup(head);
         new RemoveDupList().rmDupWithoutBuffer(head);
         ListNode.printList(head);

@@ -6,7 +6,7 @@
          next = null;
      }
 
-     public static ListNode constuctList(int[] vals) {
+     public static ListNode constructList(int[] vals) {
          ListNode dummy = new ListNode(0);
          ListNode prev = dummy;
          for (int val : vals) {
