@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * Solution:
  * Transform n into binary form
  * pre calculate x^(2^0), x^(2^1), x^(2^2)...
+ *
+ * See rewrite/Pow.java for simpler iterative and recursive version
  */
 public class Pow {
     public double pow(double x, int n) {
