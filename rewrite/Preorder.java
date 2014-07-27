@@ -23,11 +23,14 @@ public class Preorder {
         // check null first
         if (root == null)
             return res;
+        // node in the stack has not been accessed
         LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        // push initial root
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode curNode = stack.pop();
             res.add(curNode.val);
+            // pay attention: first right then left because this is a stack
             if (curNode.right != null)
                 // push is different from add
                 stack.push(curNode.right);
