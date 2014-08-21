@@ -1,40 +1,16 @@
-public class Pow {
-    public double pow(double base, int exp) {
-        if (base == 0) return 0;
-        if (base == 1) return 1;
-        boolean expNeg = exp < 0;
-        if (expNeg) exp = exp * -1;
-        double powVal = powHelper(exp, base);
-        if (expNeg)
-            powVal = 1 / powVal;
-        return powVal;
-    }
-
-    private double powHelper(int exp, double curMulti) {
-        // base condition
-        if (exp == 0)
-            return 1;
-        double curRes = exp % 2 == 0 ? 1 : curMulti;
-        return curRes * powHelper(exp/2, curMulti*curMulti);
-    }
-
-    public double powIter(double base, int exp) {
-        if (base == 0) return 0;
-        if (base == 1) return 1;
-        boolean expNeg = exp < 0;
-        if (expNeg) exp = -1 * exp;
-        double res = 1;
-        while (exp != 0) {
-            if (exp % 2 != 0)
-                res *= base;
-            base *= base;
-            exp /= 2;
+public class Solution {
+    public double pow(double x, int n) {
+        // special
+        if (x == 0) return 0;
+        if (x == 1) return 1;
+        boolean neg = n < 0;
+        n = Math.abs(n);
+        double prod = 1;
+        while (n != 0) {
+            if (n % 2 == 1) prod *= x;
+            n /= 2;
+            x *= x;
         }
-        if (expNeg) res = 1.0 / res;
-        return res;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Pow().powIter(2, 3));
+        return neg ? 1/prod : prod;
     }
 }
