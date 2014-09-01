@@ -26,7 +26,7 @@ public class Solution {
             // advance start
             while (true) {
                 char sc = S.charAt(start);
-                if (found[sc] == 0) start++;
+                if (toFind[sc] == 0) start++;
                 else if(found[sc] > toFind[sc]) {
                     found[sc]--;
                     start++;
