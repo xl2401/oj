@@ -1,51 +1,42 @@
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 /**
- * Implement an iterator with the following visiting sequence:
- * [[1,2,3],[4,5,6], [7,8]] -> [1,4,7,2,5,8,3,6]
- * the constructor is list of iterators.
+ * Given an iterator
+ * 1 2 3 4 5 6 7 8 9 -> 1 3 5 7 9
  */
-public class JumpIterator<T> implements Iterator<T>{
-    private List<Iterator<T>> lists;
-    private int listIdx = -1;
-    private boolean reachEnd = false;
+class JumpIterator<T> implements Iterator<T> {
 
-    public JumpIterator(List<Iterator<T>> lists) {
-        this.lists = lists;
+    private Iterator<T> iter;
+
+    JumpIterator(Iterator<T> iter) {
+        this.iter = iter;
     }
 
     @Override
     public boolean hasNext() {
-        if (reachEnd) return false;
-        boolean has = false;
-        for (Iterator<T> iter: lists) {
-            if (iter.hasNext()) {
-                return true;
-            }
-        }
-        reachEnd = true;
-        return false;
+        return iter.hasNext();
     }
 
     @Override
     public T next() {
-        if (hasNext()) {
-            while (true) {
-                listIdx = (listIdx + 1) % lists.size();
-                Iterator<T> curIter = lists.get(listIdx);
-                if (curIter.hasNext()) {
-                    return curIter.next();
-                }
-            }
-        } else {
-            return null;
-        }
+        T curElem = iter.next();
+        if (hasNext()) iter.next();
+        return curElem;
     }
 
     @Override
     public void remove() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        JumpIterator<Integer> jumpIterator = new JumpIterator<Integer>(new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9)).iterator());
+        while (jumpIterator.hasNext()) {
+            System.out.println(jumpIterator.next());
+        }
     }
 }
