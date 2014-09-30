@@ -23,6 +23,7 @@ public class Solution {
         return recover(root);
     }
 
+    // insert new node to the left of original node
     private void insertNew(RandTreeNode root) {
         // base case
         if (root == null) return;
@@ -34,6 +35,7 @@ public class Solution {
         insertNew(root.right);
     }
 
+    // extract the new tree and recover the old tree
     private RandTreeNode recover(RandTreeNode root) {
         // base case
         if (root == null) return null;
