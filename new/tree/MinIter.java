@@ -53,3 +53,18 @@ public class Solution {
         System.out.println(new Solution().getMinIter(a));
     }
 }
+
+/*
+ * Definition of NaryTreeNode
+ */
+public class NaryTreeNode {
+    List<NaryTreeNode> children;
+
+    public NaryTreeNode(List<NaryTreeNode> children) {
+        this.children = children;
+    }
+
+    public NaryTreeNode() {
+        this.children = new ArrayList<NaryTreeNode>();
+    }
+}
