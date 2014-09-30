@@ -24,6 +24,7 @@ public class Solution {
             }
         }
     }
+
     // DFS will result in stack overflow, so use BFS
     private void expand(char[][] board, int i, int j) {
         int M = board.length;
