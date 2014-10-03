@@ -8,7 +8,6 @@ public class Solution {
     	lastLayer.add(root);
     	while (!lastLayer.isEmpty()) {
     		LinkedList<TreeLinkNode> curLayer = new LinkedList<TreeLinkNode>();
-    		TreeLinkNode lastNode = null;
     		for (TreeLinkNode node: lastLayer) {
     			if (node.left != null)
     				curLayer.add(node.left);
